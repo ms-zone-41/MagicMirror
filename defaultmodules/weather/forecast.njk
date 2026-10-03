@@ -1,7 +1,7 @@
 {% if forecast %}
   {% set numSteps = forecast | calcNumSteps %}
   {% set currentStep = 0 %}
-  {% set columnCount = 4 + (1 if config.showUVIndex else 0) + (1 if config.showPrecipitationAmount else 0) + (1 if config.showPrecipitationProbability else 0) %}
+  {% set columnCount = 4 + (1 if config.showUVIndex else 0) + (1 if config.showPrecipitationAmount else 0) + (1 if config.showPrecipitationProbability else 0) + (1 if config.showSunshineHours else 0) %}
   <div class="{{ config.tableClass }} weather-forecast" role="table" style="--weather-columns: {{ columnCount }};">
     {% if config.ignoreToday %}
       {% set forecast = forecast.splice(1) %}
@@ -32,6 +32,14 @@
         {% endif %}
         {% if config.showPrecipitationProbability %}
           <div class="align-right bright precipitation-prob" role="cell">{{ f.precipitationProbability | unit('precip', '%') }}</div>
+        {% endif %}
+        {% if config.showSunshineHours %}
+          <div class="align-right dimmed sunshine-hours" role="cell">
+            {% if f.sunshineHours is defined and f.sunshineHours is not none %}
+              {{ f.sunshineHours | round }}
+              <span class="wi dimmed weathericon wi-day-sunny"></span>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
       {% set currentStep = currentStep + 1 %}
