@@ -1,0 +1,178 @@
+/* eslint-disable css/no-important -- this theme has to override colors of third-party modules */
+
+/* Custom CSS Sample
+ *
+ * Change color and fonts here.
+ *
+ * Beware that properties cannot be unitless, so for example write '--gap-body: 0px;' instead of just '--gap-body: 0;'
+ */
+
+/* Uncomment and adjust accordingly if you want to import another font from the google-fonts-api: */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700&display=swap'); */
+
+:root {
+  --color-background: #ffffff;
+  --color-text: #222222;
+  --color-text-dimmed: #666666;
+  --color-text-bright: #000000;
+  --font-size: 24px;
+  /* 20% bigger than default 20px */
+}
+
+/* zur Sicherheit: Hintergrund auch direkt setzen */
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+/* ===== MMM-OpenWeatherForecast: Fix white-on-white for bright mode ===== */
+
+/* Temperature text: override hardcoded #fff */
+.MMM-OpenWeatherForecast .forecast-container .forecast-item .temperature,
+.MMM-OpenWeatherForecast .forecast-container .forecast-item .temperature-container {
+  color: var(--color-text-bright);
+}
+
+/* Low temperature: override hardcoded #aaa to something readable on white */
+.MMM-OpenWeatherForecast .temperature .low-temperature,
+.MMM-OpenWeatherForecast .temperature-container .low-temperature {
+  color: var(--color-text-dimmed);
+}
+
+/* Weather alert description: override hardcoded #fff */
+.MMM-OpenWeatherForecast .weather-alert .weather-alert-description {
+  color: var(--color-text);
+}
+
+/* Invert all SVG icons (weather icons + inline icons) from white to black */
+.MMM-OpenWeatherForecast img.icon,
+.MMM-OpenWeatherForecast img.forecast-icon,
+.MMM-OpenWeatherForecast img.inline-icon {
+  filter: invert(1);
+}
+
+/* Invert animated Skycons canvas icons from white to black */
+.MMM-OpenWeatherForecast canvas.icon,
+.MMM-OpenWeatherForecast canvas.forecast-icon {
+  filter: invert(1);
+}
+
+/* ===== MMM-WeatherEffects: Fix for bright/white background ===== */
+
+/* Snow: default white → dark gray so flakes are visible on white */
+.snow-particle {
+  color: #555555 !important;
+}
+
+/* Snow color variations: darken for white background */
+.snow-particle.blue-light {
+  color: #4a90c2 !important;
+}
+
+.snow-particle.blue-medium {
+  color: #3366aa !important;
+}
+
+.snow-particle.blue-dark {
+  color: #224488 !important;
+}
+
+.snow-particle.crystal {
+  color: #888888 !important;
+}
+
+/* Snow sparkle: dark glow instead of white glow */
+@keyframes snow-sparkle-bright {
+  0%,
+  100% {
+    opacity: 0.8;
+    text-shadow: none;
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.snow-particle.sparkle {
+  animation:
+    snow-fall linear infinite,
+    snow-sparkle-bright 2s ease-in-out infinite !important;
+}
+
+/* Rain: slightly darker blue for better contrast on white */
+.rain-particle {
+  background: linear-gradient(to bottom, #0077cc, transparent) !important;
+}
+
+.rain-splash {
+  background-color: #0077cc !important;
+}
+
+/* ===== MMM-vvsDeparture: Fix colors for bright mode ===== */
+
+/* On-time green: greenyellow is invisible on white → dark green */
+.departure .nodelay.color {
+  color: #228b22 !important;
+}
+
+/* Delay red: make slightly darker for better contrast on white */
+.departure .delay.color {
+  color: #cc0000 !important;
+}
+
+/* ===== MMM-Webuntis: Fix substitution/change colors for bright mode ===== */
+.MMM-Webuntis {
+  --wu-substitution-accent: #000000;
+  --wu-substitution-generic: #000000;
+  --wu-changed-highlight: #000000;
+}
+
+.MMM-Webuntis .lesson-changed-new {
+  font-weight: normal;
+}
+
+.MMM-Webuntis .lesson-substitution-text {
+  font-weight: normal;
+}
+
+/* ===== MMM-Losung: theme text color instead of hard-coded white, same size for both texts ===== */
+.MMM-Losung .moravian-text,
+.MMM-Losung .teaching-text {
+  color: var(--color-text-bright);
+}
+
+.MMM-Losung .moravian-text {
+  font: inherit;
+}
+
+/* ===== weather: max before min, rain and sunshine icons ===== */
+.weather .weather-forecast {
+  --weather-forecast-max-temp-order: 3;
+  --weather-forecast-min-temp-order: 4;
+}
+
+/* Number and icon visibly about 6px apart in both columns: the raindrop follows
+   the number directly, the sun icon after a space (template whitespace) */
+.weather .precipitation-amount .precipitation-icon {
+  font-size: 0.75em;
+  margin-left: 6px;
+  vertical-align: middle;
+  -webkit-text-stroke: 1px;
+  -webkit-text-fill-color: transparent;
+}
+
+.weather .weather-forecast .sunshine-hours .wi {
+  font-size: 0.8em;
+  vertical-align: middle;
+}
+
+/* ===== MMM-Regenradar: center the radar image ===== */
+.MMM-Regenradar {
+  text-align: center;
+}
+
+.MMM-Regenradar img {
+  display: inline-block;
+}
