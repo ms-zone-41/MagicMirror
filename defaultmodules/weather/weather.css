@@ -79,6 +79,12 @@
   order: var(--weather-forecast-precipitation-amount-order, 6);
 }
 
+/* The raindrop as an outline, about as thick as the lines of the sun next to it */
+.weather .weather-forecast .precipitation-amount .wi-raindrop {
+  -webkit-text-stroke: 0.09em currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
 .weather .weather-forecast .precipitation-prob {
   order: var(--weather-forecast-precipitation-prob-order, 7);
 }
