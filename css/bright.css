@@ -1,0 +1,20 @@
+/* Bright theme: black on white and everything larger.
+ *
+ * The three text colors keep the contrast steps of the default theme, now on white:
+ * bright like #fff on black (21:1), normal like #999 (7.5:1), dimmed like #666 (3.5:1).
+ * config/custom.css loads it with @import url("../css/bright.css");
+ */
+
+:root {
+  --color-background: #fff;
+  --color-text: #555;
+  --color-text-dimmed: #888;
+  --color-text-bright: #000;
+  --font-size: 28px;
+}
+
+/* At this size the left and right columns are up to about 16rem wide, so the center
+   column, which may take half the width, would come too close to them */
+.region.top.center {
+  max-width: calc(100% - 34rem);
+}
