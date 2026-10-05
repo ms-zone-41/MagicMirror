@@ -28,7 +28,8 @@
         {% if config.showPrecipitationAmount %}
           <div class="align-right bright precipitation-amount{% if config.hideZeroes and hour.precipitationAmount <= 0 %}{{ " weather-hidden" }}{% endif %}" role="cell">
             {% if not config.hideZeroes or hour.precipitationAmount > 0 %}
-              {{ hour.precipitationAmount | unit("precip", hour.precipitationUnits) }}
+              {{ hour.precipitationAmount | toFixed(1) }}
+              mm
             {% endif %}
           </div>
         {% endif %}

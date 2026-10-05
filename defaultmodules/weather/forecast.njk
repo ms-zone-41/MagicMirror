@@ -28,7 +28,7 @@
           </div>
         {% endif %}
         {% if config.showPrecipitationAmount %}
-          <div class="align-right bright precipitation-amount" role="cell">{{ f.precipitationAmount | unit("precip", f.precipitationUnits) }}</div>
+          <div class="align-right bright precipitation-amount" role="cell">{{ f.precipitationAmount | round(0) }}<span class="wi wi-raindrop precipitation-icon"></span></div>
         {% endif %}
         {% if config.showPrecipitationProbability %}
           <div class="align-right bright precipitation-prob" role="cell">{{ f.precipitationProbability | unit('precip', '%') }}</div>

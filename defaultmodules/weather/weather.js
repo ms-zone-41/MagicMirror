@@ -329,6 +329,11 @@ Module.register("weather", {
 
 	addFilters () {
 		this.nunjucksEnvironment().addFilter(
+			"toFixed",
+			(value, decimals) => (value === null || value === undefined || isNaN(value) ? "" : parseFloat(value).toFixed(decimals ?? 1))
+		);
+
+		this.nunjucksEnvironment().addFilter(
 			"formatTime",
 			(date) => {
 				return formatTime(this.config, date);
