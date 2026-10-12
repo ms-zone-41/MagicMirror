@@ -14,6 +14,7 @@ Module.register("updatenotification", {
 	moduleList: {},
 	needRestart: false,
 	updates: [],
+	selfHidden: false,
 
 	start () {
 		Log.info(`Starting module: ${this.name}`);
@@ -21,6 +22,7 @@ Module.register("updatenotification", {
 		setInterval(() => {
 			this.moduleList = {};
 			this.updateDom(2);
+			this.updateVisibility();
 		}, this.config.refreshInterval);
 	},
 
@@ -36,6 +38,7 @@ Module.register("updatenotification", {
 	notificationReceived (notification) {
 		switch (notification) {
 			case "DOM_OBJECTS_CREATED":
+				this.updateVisibility();
 				this.sendSocketNotification("CONFIG", this.config);
 				this.sendSocketNotification("MODULES", Object.keys(Module.definitions));
 				break;
@@ -78,6 +81,7 @@ Module.register("updatenotification", {
 				// save it
 				this.moduleList[payload.module] = payload;
 				this.updateDom(2);
+				this.updateVisibility();
 			}
 		} else if (payload && payload.behind === 0) {
 			// if the module WAS in the list, but shouldn't be
@@ -85,7 +89,24 @@ Module.register("updatenotification", {
 				// remove it
 				delete this.moduleList[payload.module];
 				this.updateDom(2);
+				this.updateVisibility();
 			}
+		}
+	},
+
+	/**
+	 * Hides the module while it has nothing to show, so that it takes no space,
+	 * e.g. in the top bar above the other regions. The lockString keeps a hide
+	 * by another module in force.
+	 */
+	updateVisibility () {
+		const empty = !this.needRestart && Object.keys(this.moduleList).length === 0 && Object.keys(this.updates).length === 0;
+		if (empty && !this.selfHidden) {
+			this.selfHidden = true;
+			this.hide(0, () => {}, { lockString: this.identifier });
+		} else if (!empty && this.selfHidden) {
+			this.selfHidden = false;
+			this.show(0, () => {}, { lockString: this.identifier });
 		}
 	},
 
@@ -122,6 +143,7 @@ Module.register("updatenotification", {
 			}
 
 			this.updateDom(2);
+			this.updateVisibility();
 		}
 	}
 });
